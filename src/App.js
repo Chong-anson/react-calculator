@@ -3,27 +3,40 @@ import './App.css';
 
 function App() {
   const [value, setValue] = useState("0");
-  const [secondValue, setSecondValue] = useState("0");
+  const [secondValue, setSecondValue] = useState("");
+  const [reset, setReset] = useState(true);
   const [symbol, setSymbol] = useState("");
 
   const symbolChange = (sym) => (
     (e) => {
       e.preventDefault();
       setSymbol(sym);
+      setReset(true);
     }
   )
+  
+  const clear = (e) => {
+    e.preventDefault();
+    setValue("0");
+    setSecondValue("");
+    setReset(true);
+    setSymbol("");
+  }
+
   const updateValue = (num) => (
     (e) => {
       e.preventDefault(); 
       if (symbol === "") {
-        if (value === "0") {
+        if (reset) {
           setValue(num);
+          setReset(false);
         } else {
           setValue(value + num);
         }
       } else {
-        if (secondValue === "0") {
+        if (reset) {
           setSecondValue(num);
+          setReset(false);
         } else {
           setSecondValue(secondValue + num);
         }
@@ -34,22 +47,24 @@ function App() {
     let result;
     switch(symbol) {
       case "+":
-        result = parseInt(value) + parseInt(secondValue);
+        result = parseFloat(value) + parseFloat(secondValue);
         break;
       case "-":
-        result = parseInt(value) - parseInt(secondValue);
+        result = parseFloat(value) - parseFloat(secondValue);
         break;
       case "*":
-        result = parseInt(value) * parseInt(secondValue);
+        result = parseFloat(value) * parseFloat(secondValue);
         break;
       case "/":
-        result = parseInt(value) / parseInt(secondValue);
+        result = parseFloat(value) / parseFloat(secondValue);
         break;
       default: 
-        result = parseInt(value);
+        result = parseFloat(value);
     }
     setSymbol("");
     setValue(result.toString());
+    setSecondValue("");
+    setReset(true);
   }
 
   return (
@@ -82,7 +97,7 @@ function App() {
             <div className="numbers">
               <div onClick={updateValue("0")}>0</div>
               <div onClick={updateValue(".")}>.</div>
-              <div id="clear">C</div>
+              <div id="clear" onClick={clear}>C</div>
             </div>
           </div>
           <div className="equal" id="result" onClick={result}>=</div>
