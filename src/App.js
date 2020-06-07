@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react';
 import './App.css';
 
 function App() {
-  const [value, setValue] = useState("0");
+  const [value, setValue] = useState("0"); // this.state = {value: 0}
   const [secondValue, setSecondValue] = useState("");
   const [reset, setReset] = useState(true);
   const [symbol, setSymbol] = useState("");
@@ -27,6 +27,7 @@ function App() {
     (e) => {
       e.preventDefault(); 
       if (symbol === "") {
+        // this.setState({value: })
         if (reset) {
           setValue(num);
           setReset(false);
