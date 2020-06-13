@@ -1,5 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import './App.css';
+import { Modal } from './Modal';
+import { setGlobalState } from "react-global-state-hook";
 
 function App() {
   const [value, setValue] = useState("0"); // this.state = {value: 0}
@@ -66,6 +68,7 @@ function App() {
     setValue(result.toString());
     setSecondValue("");
     setReset(true);
+    setGlobalState("modal", result.toString())
   }
 
   return (
@@ -92,6 +95,7 @@ function App() {
           <div className="equal" id="result" onClick={result}>=</div>
         </div>
       </div>
+      <Modal />
     </div>
   );
 }
